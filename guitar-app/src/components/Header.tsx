@@ -1,7 +1,22 @@
-import { useMemo } from "react"
+import { useMemo } from "react";
+import { CartItem, Guitar } from "../types/types"
 
-export default function Header({cart, removeFromCart, increaseQuantity, decreaseQuantity, clearCart}){
+type HeaderProps = {
+    cart: CartItem[];
+    removeFromCart: (id: Guitar['id']) => void;
+    decreaseQuantity: (id: Guitar['id']) => void;
+    increaseQuantity: (id: Guitar['id']) => void;
+    clearCart: () => void
 
+}
+
+export default function Header({
+        cart, 
+        removeFromCart, 
+        increaseQuantity, 
+        decreaseQuantity, 
+        clearCart
+    }: HeaderProps) {
 
     //State derivado
     const isEmpty = useMemo(() => cart.length === 0, [cart])
