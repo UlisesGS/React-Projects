@@ -18,11 +18,6 @@ export const useCart = () => {
     }, [cart]);
 
 
-
-    function removeFromCart(id:Guitar['id']) {
-      setCart((prevCart) => prevCart.filter((guitar) => guitar.id !== id));
-    }
-
     function increaseQuantity(id:Guitar['id']) {
       const updatedCart = cart.map((item) => {
         if (item.id === id && item.quantity < MAX_ITEMS) {
@@ -59,7 +54,6 @@ export const useCart = () => {
 
     return {
         cart,
-        removeFromCart,
         increaseQuantity,
         decreaseQuantity,
         clearCart
