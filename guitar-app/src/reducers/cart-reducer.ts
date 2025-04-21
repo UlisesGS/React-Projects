@@ -4,8 +4,8 @@ import { CartItem, Guitar } from "../types/types";
 export type CartActions =
 { type: 'add-to-cart', payload: {item:Guitar}} |
 { type: 'remove-from-cart', payload: {id:Guitar['id']}} | 
-{ type: 'decrement-cart-item', payload: {id:Guitar['id']}} |
-{ type: 'increment-cart-item', payload: {id:Guitar['id']}} |
+{ type: 'decrease-quantity', payload: {id:Guitar['id']}} |
+{ type: 'increase-quantity', payload: {id:Guitar['id']}} |
 { type: 'clear-cart'}
 
 export type CartState = {
@@ -13,9 +13,14 @@ export type CartState = {
     cart: CartItem[]
 }
 
+const initialCart = () : CartItem[] => {
+      const localStorageCart = localStorage.getItem("cart");
+      return localStorageCart ? JSON.parse(localStorageCart) : [];
+};
+
 export const initialState: CartState = {
     data: db,
-    cart: []
+    cart: initialCart()
 }
 
 
@@ -68,21 +73,46 @@ export const cartReducer = (
         }
     }
 
-    if(action.type === 'decrement-cart-item') {
+    if(action.type === 'decrease-quantity') {
+        const cart = state.cart.map((item) => {
+          if (item.id === action.payload.id && item.quantity >= MIN_ITEMS) {
+            return {
+              ...item,
+              quantity: item.quantity - 1,
+            };
+          }
+
+          return item;
+        })
+        .filter((item) => item.quantity > 0);
+
         return{
-            ...state
+            ...state,
+            cart
         }
     }
 
-    if(action.type === 'increment-cart-item') {
+    if(action.type === 'increase-quantity') {
+        const cart = state.cart.map((item) => {
+            if (item.id === action.payload.id && item.quantity < MAX_ITEMS) {
+              return {
+                ...item,
+                quantity: item.quantity + 1,
+              };
+            }
+            return item;
+          });
+
         return{
-            ...state
+            ...state,
+            cart
         }
     }
 
     if(action.type === 'clear-cart') {
         return{
-            ...state
+            ...state,
+            cart: []
         }
     }
 }
