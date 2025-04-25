@@ -9,4 +9,4 @@ Aplicación para gestionar pacientes que permite registrar, editar, eliminar y l
 ### 🎸 GuitarApp  
 Aplicación desarrollada con React para afianzar conceptos fundamentales del framework, incluyendo el manejo de estados, props y la implementación funcional de un carrito de compras.
 
-- Accede al sitio web: [![Sitio web](https://img.icons8.com/fluency/24/link.png)](https://starlit-seahorse-3fa309.netlify.app/)
+- Accede al sitio web: [![Sitio web](https://img.icons8.com/fluency/24/link.png)](https://effervescent-rugelach-e6dbab.netlify.app/)
