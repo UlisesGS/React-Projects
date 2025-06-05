@@ -1,22 +1,34 @@
+
+import { Container, Typography, Grid } from '@mui/material';
 import { UserForm } from "./components/UserForm";
 import { UsersList } from "./components/UsersList";
 
 export const UserApp = () => {
+
+    const initialUsers = [
+        {
+            id: 1,
+            username: 'p',
+            password: '12345',
+            email: 'pepe@correo.com'
+        }
+    ]
+
     return (
-        <div className="containar my-4">
-            <h2>Users App</h2>
-            <div className="row">
+        <Container sx={{ my: 4 }}>
+        <Typography variant="h4" gutterBottom>
+            Users App
+        </Typography>
 
-                <div className="col">
-                    <UserForm/>
-                </div>
+        <Grid container spacing={50}>
+            <Grid item xs={12} md={6}>
+                <UserForm />
+            </Grid>
 
-                <div className="col">
-                    <UsersList/>
-                </div>
-
-            </div>
-            
-        </div>
+            <Grid item xs={12} md={6}>
+                <UsersList users={ initialUsers } />
+            </Grid>
+        </Grid>
+        </Container>
     );
 }

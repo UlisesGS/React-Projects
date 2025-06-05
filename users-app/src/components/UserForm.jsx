@@ -1,8 +1,11 @@
+import { Typography } from '@mui/material';
 export const UserForm = () => {
 
     return(
         <>
-            <p>Formulario de usuario</p>
+            <Typography variant="h6" gutterBottom>
+                Formulario de usuario
+            </Typography>
         </>
     )
 }
