@@ -9,8 +9,8 @@ import {
   TableContainer,
   Button
 } from '@mui/material';
-import DeleteIcon from '@mui/icons-material/Delete';
-import EditIcon from '@mui/icons-material/Edit';
+
+import { UserRow } from './UserRow';
 
 export const UsersList = ({users}) => {
 
@@ -30,13 +30,7 @@ export const UsersList = ({users}) => {
                 <TableBody>
                     {
                         users.map( user => (
-                            <TableRow>
-                                <TableCell>{user.id}</TableCell>
-                                <TableCell>{user.username}</TableCell>
-                                <TableCell>{user.email}</TableCell>
-                                <TableCell><Button variant="contained" size="small" startIcon={<EditIcon />}>Update</Button></TableCell>
-                                <TableCell><Button variant="contained" color="error" size="small" startIcon={<DeleteIcon />}>Remove</Button></TableCell>
-                            </TableRow>
+                            <UserRow key={user.id} user={user}/>
                         ))
                     }
                 </TableBody>
