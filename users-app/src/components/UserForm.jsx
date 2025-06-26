@@ -1,19 +1,20 @@
-import { Box, Button, TextField, Typography } from '@mui/material';
-import { useState } from 'react';
+import { Box, Button, DialogActions, TextField, Typography } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { CancelButton, SaveButton } from '../Styled';
 
 
-const initialUserForm = {
-    username:'',
-    password:'',
-    email:''
-}
-
-
-export const UserForm = ({handlerAddUser}) => {
+export const UserForm = ({userSelected,handlerAddUser, initialUserForm}) => {
 
     const [userForm, setUserForm] = useState(initialUserForm);
 
-    const {username,password,email} = userForm;
+    const {id,username,password,email} = userForm;
+
+    useEffect(() => {
+        setUserForm({
+                ...userSelected,
+                password:'',
+            });
+    }, [userSelected]);
 
     const onInputChange = ({target}) => {
         
@@ -50,15 +51,17 @@ export const UserForm = ({handlerAddUser}) => {
                     onChange={onInputChange}
                     required
                 />
-                <TextField
-                    label="Password"
-                    type="password"
-                    variant="outlined"
-                    name="password"
-                    value={password}
-                    onChange={onInputChange}
-                    required
-                />
+                {!id && (
+                    <TextField
+                        label="Password"
+                        type="password"
+                        variant="outlined"
+                        name="password"
+                        value={password}
+                        onChange={onInputChange}
+                        required
+                    />
+                )}
                 <TextField
                     label="Email"
                     type="email"
@@ -68,9 +71,11 @@ export const UserForm = ({handlerAddUser}) => {
                     onChange={onInputChange}
                     required
                 />
-                <Button type="submit" variant="contained">
-                    Enviar
-                </Button>
+                <DialogActions sx={{ gap: 2 }}>
+                    <CancelButton variant='outlined' size="small">cancel</CancelButton>
+                    <SaveButton variant="outlined" size="small">save</SaveButton>
+                    
+                </DialogActions>
             </Box>
         </>
     )

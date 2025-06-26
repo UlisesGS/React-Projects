@@ -12,7 +12,7 @@ import {
 
 import { UserRow } from './UserRow';
 
-export const UsersList = ({users}) => {
+export const UsersList = ({handlerUserSelectedForm,handlerRemoveUser, users}) => {
 
     return(
 
@@ -30,7 +30,12 @@ export const UsersList = ({users}) => {
                 <TableBody>
                     {
                         users.map( user => (
-                            <UserRow key={user.id} user={user}/>
+                            <UserRow
+                                key={user.id}
+                                user={user}
+                                handlerRemoveUser={handlerRemoveUser}
+                                handlerUserSelectedForm={handlerUserSelectedForm}
+                            />
                         ))
                     }
                 </TableBody>
