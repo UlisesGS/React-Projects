@@ -1,4 +1,4 @@
-import { useReducer, useState } from "react";
+import {  useReducer, useState } from "react";
 import { usersReducer } from "../reducers/usersReducer";
 
 const initialUsers = [
@@ -30,6 +30,9 @@ export const useUsers = () => {
     const [openDialog, setOpenDialog] = useState(false);
     const [userIdToDelete, setUserIdToDelete] = useState(null);
 
+    //form
+    const [visibleForm, setVisibleForm] = useState(false);
+
     const showSnackbar = (message, severity = 'success') => {
         setSnackbarMessage(message);
         setSnackbarSeverity(severity);
@@ -54,6 +57,8 @@ export const useUsers = () => {
             });
             showSnackbar('✏️ Usuario actualizado correctamente');
         }
+        setVisibleForm(false);
+        setUserSelected(initialUserForm);
     };
 
     // 🔁 En lugar de eliminar directamente, se abre el diálogo
@@ -79,8 +84,18 @@ export const useUsers = () => {
     };
 
     const handlerUserSelectedForm = (user) => {
+        setVisibleForm(true);
         setUserSelected({ ...user });
     };
+
+    const handlerOpenForm = () => {
+        setVisibleForm(true);
+    }
+
+    const handlerCloseForm = () => {
+        setUserSelected(initialUserForm);
+        setVisibleForm(false);
+    }
 
     return {
         users,
@@ -92,7 +107,9 @@ export const useUsers = () => {
         handlerConfirmRemoveUser,
         handlerCancelRemoveUser,
         openDialog,
-
+        visibleForm,
+        handlerOpenForm,
+        handlerCloseForm,
         // Alertas
         openSnackbar,
         snackbarMessage,
