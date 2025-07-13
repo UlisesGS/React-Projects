@@ -7,30 +7,20 @@ import {
   Paper,
   InputAdornment,
   IconButton,
-  Snackbar,
-  Alert
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { useState } from 'react';
-import { useSnackbar } from '../../hooks/useSnackbar';
 
 const initialLoginForm = {
     email: '',
     password: ''
 }
 
-export const LoginPage = () => {
+export const LoginPage = ({handlerLogin}) => {
   const [showPassword, setShowPassword] = useState(false);
   const [loginForm, setLoginForm] = useState(initialLoginForm);
   const {email, password} = loginForm;
 
-  const {
-    openSnackbar,
-    snackbarMessage,
-    snackbarSeverity,
-    showSnackbar,
-    handleCloseSnackbar,
-  } = useSnackbar();
 
   const onInputChange = ({target}) => {
     const { name, value } = target;
@@ -46,32 +36,13 @@ export const LoginPage = () => {
 
   const onSubmit = (event) => {
     event.preventDefault();
-   if(email === 'admin@gmail.com' && password === '12345'){
-    //
-    }else{
-        showSnackbar('Credenciales invalidas', 'error');
-    }
+    
+    handlerLogin({email,password});
     setLoginForm(initialLoginForm);
   };
 
   return (
     <Container maxWidth="sm" sx={{ mt: 10 }}>
-
-        <Snackbar
-            open={openSnackbar}
-            autoHideDuration={3000}
-            onClose={handleCloseSnackbar}
-            anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-        >
-            <Alert
-                onClose={handleCloseSnackbar}
-                severity={snackbarSeverity}
-                variant="filled"
-                sx={{ width: '100%' }}
-            >
-                {snackbarMessage}
-            </Alert>
-      </Snackbar>
       <Paper elevation={6} sx={{ p: 4, borderRadius: 4 }}>
         <Typography variant="h5" component="h1" align="center" gutterBottom>
           Login
