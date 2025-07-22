@@ -1,13 +1,16 @@
 import { Box, Button, DialogActions, DialogContent, Divider, TextField, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { CancelButton, SaveButton } from '../Styled';
+import { UserContext } from '../context/UserContext';
 
 
-export const UserForm = ({handlerCloseForm,userSelected,handlerAddUser, initialUserForm}) => {
+export const UserForm = ({handlerCloseForm,userSelected}) => {
+
+    const {handlerAddUser, initialUserForm} = useContext(UserContext);
 
     const [userForm, setUserForm] = useState(initialUserForm);
 
-    const {id,username,password,email} = userForm;
+    const {id,username,password,email} = userForm|| {};
 
     useEffect(() => {
         setUserForm({
@@ -95,9 +98,10 @@ export const UserForm = ({handlerCloseForm,userSelected,handlerAddUser, initialU
             <Divider />
 
             <DialogActions sx={{ px: 3, pb: 2, justifyContent: 'flex-end', gap: 2 }}>
-                <CancelButton onClick={onCloseForm} variant="outlined">
+                {!handlerCloseForm || <CancelButton onClick={onCloseForm} variant="outlined">
                     Cancelar
-                </CancelButton>
+                </CancelButton>}
+                
                 <SaveButton type="submit" variant="outlined" form="user-form">
                     Guardar
                 </SaveButton>

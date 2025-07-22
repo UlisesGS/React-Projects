@@ -9,14 +9,17 @@ import {
   IconButton,
 } from '@mui/material';
 import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { AuthContext } from '../context/AuthContext';
 
 const initialLoginForm = {
     email: '',
     password: ''
 }
 
-export const LoginPage = ({handlerLogin}) => {
+export const LoginPage = () => {
+  
+  const {handlerLogin} = useContext(AuthContext)
   const [showPassword, setShowPassword] = useState(false);
   const [loginForm, setLoginForm] = useState(initialLoginForm);
   const {email, password} = loginForm;

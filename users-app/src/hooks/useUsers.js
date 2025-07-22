@@ -1,14 +1,8 @@
 import {  useReducer, useState } from "react";
 import { usersReducer } from "../reducers/usersReducer";
+import { findAll, remove, save, update } from "../services/userService";
 
-const initialUsers = [
-    {
-        id: 1,
-        username: 'p',
-        password: '12345',
-        email: 'pepe@correo.com'
-    }
-];
+const initialUsers = [];
 
 const initialUserForm = {
     id: 0,
@@ -33,6 +27,15 @@ export const useUsers = () => {
     //form
     const [visibleForm, setVisibleForm] = useState(false);
 
+    //api
+    const getUsers = async() => {
+        const result = await findAll();
+        dispatch({
+            type: 'loadingUsers',
+            payload: result.data
+        })
+    }
+
     const showSnackbar = (message, severity = 'success') => {
         setSnackbarMessage(message);
         setSnackbarSeverity(severity);
@@ -43,17 +46,26 @@ export const useUsers = () => {
         setOpenSnackbar(false);
     };
 
-    const handlerAddUser = (user) => {
+    const handlerAddUser = async(user) => {
+
+        let response;
+
+        if (user.id === 0) {
+            response = await save(user);
+        } else {
+            response = await update(user);
+        }
+
         if (user.id === 0) {
             dispatch({
                 type: 'addUser',
-                payload: user,
+                payload: response.data,
             });
             showSnackbar('✅ Usuario creado correctamente');
         } else {
             dispatch({
                 type: 'updateUser',
-                payload: user,
+                payload: response.data,
             });
             showSnackbar('✏️ Usuario actualizado correctamente');
         }
@@ -64,11 +76,14 @@ export const useUsers = () => {
     // 🔁 En lugar de eliminar directamente, se abre el diálogo
     const handlerRequestRemoveUser = (id) => {
         setUserIdToDelete(id);
+        console.log(userIdToDelete);
+        
         setOpenDialog(true);
     };
 
     // ✅ Eliminar después de confirmar
     const handlerConfirmRemoveUser = () => {
+        remove(userIdToDelete);
         dispatch({
             type: 'removeUser',
             payload: userIdToDelete,
@@ -110,6 +125,7 @@ export const useUsers = () => {
         visibleForm,
         handlerOpenForm,
         handlerCloseForm,
+        getUsers,
         // Alertas
         openSnackbar,
         snackbarMessage,

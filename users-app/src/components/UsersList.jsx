@@ -11,8 +11,12 @@ import {
 } from '@mui/material';
 
 import { UserRow } from './UserRow';
+import { useContext } from 'react';
+import { UserContext } from '../context/UserContext';
 
-export const UsersList = ({handlerUserSelectedForm,handlerRemoveUser, users}) => {
+export const UsersList = () => {
+
+    const {users} = useContext(UserContext)
 
     return(
 
@@ -29,12 +33,10 @@ export const UsersList = ({handlerUserSelectedForm,handlerRemoveUser, users}) =>
                 </TableHead>
                 <TableBody>
                     {
-                        users.map( user => (
+                        users.map( item => (
                             <UserRow
-                                key={user.id}
-                                user={user}
-                                handlerRemoveUser={handlerRemoveUser}
-                                handlerUserSelectedForm={handlerUserSelectedForm}
+                                key={item.user.id}
+                                user={item.user}
                             />
                         ))
                     }

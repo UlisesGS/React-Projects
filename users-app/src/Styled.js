@@ -39,3 +39,14 @@ export const SaveButton = styled(Button)(() => ({
     color: '#a5d6a7',
   },
 }));
+
+export const LinkButton = styled(Button)(() => ({
+  color: 'inherit',
+  textDecoration: 'none',
+  '&.active': {
+    color: 'primary.main',
+    fontWeight: 'bold',
+    borderBottom: '2px solid',
+    borderColor: 'primary.main',
+  }
+}));

@@ -1,9 +1,12 @@
 import { TableCell, TableRow, Button } from "@mui/material"
 import DeleteIcon from '@mui/icons-material/Delete';
 import EditIcon from '@mui/icons-material/Edit';
+import { useContext } from "react";
+import { UserContext } from "../context/UserContext";
 
-export const UserRow = ({handlerUserSelectedForm,handlerRemoveUser, user}) => {
+export const UserRow = ({ user}) => {
 
+    const {handlerUserSelectedForm,handlerRequestRemoveUser} = useContext(UserContext)
 
     return (
         <TableRow>
@@ -22,7 +25,7 @@ export const UserRow = ({handlerUserSelectedForm,handlerRemoveUser, user}) => {
                     variant="contained"
                     color="error"
                     size="small"
-                    onClick={() => handlerRemoveUser(user.id)}
+                    onClick={() => handlerRequestRemoveUser(user.id)}
                 startIcon={<DeleteIcon />}>Remove</Button></TableCell>
         </TableRow>
     )

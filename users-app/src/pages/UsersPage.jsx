@@ -13,15 +13,14 @@ import {
 
 import { CancelButton, DeleteButton } from '../Styled';
 import { UsersList } from "../components/UsersList";
-import { useUsers } from '../hooks/useUsers';
 import { UserModalForm } from '../components/UserModalForm';
+import { useContext, useEffect } from 'react';
+import { UserContext } from '../context/UserContext';
 
-export const UsersPage = () => {
+export const UsersPage = ( ) => {
+    
     const {
         users,
-        userSelected,
-        initialUserForm,
-        handlerAddUser,
         handlerUserSelectedForm,
         handlerRequestRemoveUser,
         handlerConfirmRemoveUser,
@@ -32,23 +31,19 @@ export const UsersPage = () => {
         snackbarMessage,
         snackbarSeverity,
         handleCloseSnackbar,
-        handlerCloseForm,
-        handlerOpenForm
-    } = useUsers();
+        handlerOpenForm,
+        getUsers
+    } = useContext(UserContext)
+
+    useEffect (() => {
+        getUsers()
+    }, [])
 
     return (
 
-        
-
         <Container sx={{ my: 4 }}>
             {visibleForm && (
-                <UserModalForm
-                    userSelected={userSelected}
-                    initialUserForm={initialUserForm}
-                    handlerAddUser={handlerAddUser}
-                    handlerCloseForm={handlerCloseForm}
-                    visibleForm={visibleForm}
-                />
+                <UserModalForm/>
             )}
             <Typography variant="h4" gutterBottom>
                 Users App

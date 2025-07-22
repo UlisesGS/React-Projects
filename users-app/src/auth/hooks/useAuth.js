@@ -1,6 +1,7 @@
 import { useReducer } from "react";
 import { loginReducer } from "../reducers/LoginReducer";
 import { loginUser } from "../services/authService";
+import { useNavigate } from "react-router-dom";
 
 const initialLogin = JSON.parse(sessionStorage.getItem('login')) || {
     isAuth: false,
@@ -10,6 +11,7 @@ const initialLogin = JSON.parse(sessionStorage.getItem('login')) || {
 export const useAuth = ({showSnackbar}) => {
     
     const [login, dispatch] = useReducer(loginReducer, initialLogin);
+    const navigate = useNavigate();
 
     const handlerLogin = ({email,password}) => {
             const isLogin = loginUser({email,password})
@@ -23,6 +25,7 @@ export const useAuth = ({showSnackbar}) => {
                     isAuth: true,
                     user
                 }))
+                navigate('/users')
             }else{
                 console.log('hola');
                 

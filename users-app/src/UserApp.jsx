@@ -1,18 +1,17 @@
 import { LoginPage } from "./auth/pages/LoginPage";
-import { UsersPage } from "./pages/UsersPage";
 import { Snackbar, Alert } from '@mui/material';
-import { useSnackbar } from "./hooks/useSnackbar";
-import { Navbar } from "./components/layout/Navbar";
-import { useAuth } from "./auth/hooks/useAuth";
+import { Navigate, Route, Routes } from "react-router-dom";
+import { UserRoutes } from "./routes/UserRoutes";
+import { useContext } from "react";
+import { AuthContext } from "./auth/context/AuthContext";
 
 
 
 export const UserApp = () => {
     
     
-    const snackbar = useSnackbar(); 
-    const {login,handlerLogin, handlerLogout} = useAuth(snackbar);
-
+    
+    const {login,snackbar} = useContext(AuthContext)
     return (
         <>
             <Snackbar
@@ -30,14 +29,19 @@ export const UserApp = () => {
                 {snackbar.snackbarMessage}
             </Alert>
             </Snackbar>
-            {login.isAuth
-            ? (
+        
+        
+            <Routes>
+                {login.isAuth
+                ? (
+                    <Route path='/*' element={<UserRoutes/>} />
+                )
+                : 
                 <>
-                    <Navbar login={login} handlerLogout={handlerLogout} />
-                    <UsersPage/>
-                </>
-              )
-            : <LoginPage handlerLogin={handlerLogin}/>}
+                    <Route path='/login' element={<LoginPage/>}/>
+                    <Route path='/*' element={<Navigate to="/login"/>}/>
+                </> }
+            </Routes>
         </>
     )
 };
