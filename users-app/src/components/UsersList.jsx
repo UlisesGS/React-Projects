@@ -33,10 +33,10 @@ export const UsersList = () => {
                 </TableHead>
                 <TableBody>
                     {
-                        users.map( item => (
+                        users.map( user => (
                             <UserRow
-                                key={item.user.id}
-                                user={item.user}
+                                key={user.id}
+                                user={user}
                             />
                         ))
                     }

@@ -4,10 +4,8 @@ export const usersReducer = (state = [], action) => {
         case 'addUser':
 
             return [
-                ...state,
-                {
-                    ...action.payload,
-                }
+                ...state.filter(u => u.id !== 0),
+                { ...action.payload }
             ];
         
         case 'removeUser':

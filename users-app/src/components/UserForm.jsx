@@ -6,7 +6,7 @@ import { UserContext } from '../context/UserContext';
 
 export const UserForm = ({handlerCloseForm,userSelected}) => {
 
-    const {handlerAddUser, initialUserForm} = useContext(UserContext);
+    const {handlerAddUser, initialUserForm, errors} = useContext(UserContext);
 
     const [userForm, setUserForm] = useState(initialUserForm);
 
@@ -41,12 +41,11 @@ export const UserForm = ({handlerCloseForm,userSelected}) => {
 
     const onCloseForm = () => {
         handlerCloseForm();
-        setUserForm(initialUserForm);
     }
 
     return(
         <>
-            <DialogContent>
+           <DialogContent>
                 <Box
                     id="user-form"
                     component="form"
@@ -54,44 +53,100 @@ export const UserForm = ({handlerCloseForm,userSelected}) => {
                     sx={{
                         display: 'flex',
                         flexDirection: 'column',
-                        gap: 3,
+                        gap: 3, // separación entre campos completos
                         mt: 1,
                         maxWidth: 400,
                         mx: 'auto',
                         width: '100%',
                     }}
                 >
-                    <TextField
-                        label="Username"
-                        variant="outlined"
-                        name="username"
-                        value={username}
-                        onChange={onInputChange}
-                        required
-                        fullWidth
-                    />
-                    {!id && (
+                    {/* Username */}
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
                         <TextField
-                        label="Password"
-                        type="password"
-                        variant="outlined"
-                        name="password"
-                        value={password}
-                        onChange={onInputChange}
-                        required
-                        fullWidth
+                            label="Username"
+                            variant="outlined"
+                            name="username"
+                            value={username}
+                            onChange={onInputChange}
+                            fullWidth
+                            margin="none"
                         />
+                        {errors?.username && (
+                            <Box
+                            sx={{
+                                backgroundColor: '#f44336',
+                                color: 'white',
+                                px: 2,
+                                py: 1,
+                                borderRadius: 1,
+                                fontSize: '0.875rem',
+                                mt: 0.5, // muy pegado pero con aire
+                            }}
+                            >
+                            {errors.username}
+                            </Box>
+                        )}
+                    </Box>
+
+                    {/* Password (solo si no hay ID) */}
+                    {!id && (
+                        <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                            <TextField
+                            label="Password"
+                            type="password"
+                            variant="outlined"
+                            name="password"
+                            value={password}
+                            onChange={onInputChange}
+                            fullWidth
+                            margin="none"
+                            />
+                            {errors?.password && (
+                            <Box
+                                sx={{
+                                backgroundColor: '#f44336',
+                                color: 'white',
+                                px: 2,
+                                py: 1,
+                                borderRadius: 1,
+                                fontSize: '0.875rem',
+                                mt: 0.5,
+                                }}
+                            >
+                                {errors.password}
+                            </Box>
+                            )}
+                        </Box>
                     )}
-                    <TextField
-                        label="Email"
-                        type="email"
-                        variant="outlined"
-                        name="email"
-                        value={email}
-                        onChange={onInputChange}
-                        required
-                        fullWidth
-                    />
+
+                    {/* Email */}
+                    <Box sx={{ display: 'flex', flexDirection: 'column' }}>
+                        <TextField
+                            label="Email"
+                            type="email"
+                            variant="outlined"
+                            name="email"
+                            value={email}
+                            onChange={onInputChange}
+                            fullWidth
+                            margin="none"
+                        />
+                        {errors?.email && (
+                            <Box
+                            sx={{
+                                backgroundColor: '#f44336',
+                                color: 'white',
+                                px: 2,
+                                py: 1,
+                                borderRadius: 1,
+                                fontSize: '0.875rem',
+                                mt: 0.5,
+                            }}
+                            >
+                            {errors.email}
+                            </Box>
+                        )}
+                    </Box>
                 </Box>
             </DialogContent>
 
